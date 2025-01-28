@@ -30,9 +30,12 @@ This guide walks through automating the setup of a Debian server using Terraform
 
 ### SSH Key Configuration
 
-Before beginning the Terraform setup, ensure your SSH keys are properly configured:
+Before beginning the Terraform setup, ensure your SSH keys are properly configured. If you're new to that, you may want to do some research via Github or DigitalOcean blogs on the topic of ssh key generation & related setup.
 
 ```bash
+# generate a new key if you need to
+ssh-keygen -t ed25519 -C "you@yourEmail.com"
+
 # Configure SSH key in ~/.ssh/config
 Host *
   AddKeysToAgent yes
