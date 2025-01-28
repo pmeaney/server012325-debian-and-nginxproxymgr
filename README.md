@@ -130,4 +130,13 @@ we can set it up to serve traffic to our applications' docker containers.
 
 To do this, we'll need to do a little bit of setup with our Domain name's DNS Registrar, and our Hosting provider. I recommend Namecheap & DigitalOcean, respectively.
 
+- Create a domain name
+- Point it at the nameservers of your hosting provider
+- In hosting provider's dashboard, create DNS A-Records pointing to your server IP, and any subdomains you may want to direct traffic through. For example, you maybe want to have your Strapi CMS running at cms.domainname.com, strapi.domainname.com, or blog.domainname.com . Typically you have at least two A-records: www.domainname.com & domainname.com, pointing at your server's IP address.
+
+### Networking & Docker containers
+
+We'll use this project for our initial project:
+https://github.com/pmeaney/portfolio2025-next-strapi-postgres
+
 # Resources & References
