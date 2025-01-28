@@ -24,6 +24,8 @@ services:
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - postgres-for-nginx-proxy-mgr-012825
+    networks:
+      - main-network--nginxproxymgr
 
   postgres-for-nginx-proxy-mgr-012825:
     image: postgres:latest
@@ -34,3 +36,11 @@ services:
       POSTGRES_DB: "npm"
     volumes:
       - ./postgres:/var/lib/postgresql/data
+    networks:
+      - main-network--nginxproxymgr
+
+networks:
+  main-network--nginxproxymgr:
+    name: main-network--nginxproxymgr
+    # With external: true, Docker Compose expects the network to exist already and will fail if it doesn't
+    # Without external: true, Docker Compose will automatically create the network when you run docker-compose up
