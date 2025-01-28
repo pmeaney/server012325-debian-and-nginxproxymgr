@@ -1,12 +1,12 @@
-# original source of the Terraform project code in Step 1:
+# Automating a server setup with Terraform and Nginx Proxy Manager
 
-https://awstip.com/how-to-create-digitalocean-droplet-using-terraform-a-z-guide-df91716f6021
+In this project we'll automate the process of setting up a Linux server (Debian), using Terraform. Then we'll open the server to web traffic with Nginx Proxy Manager ("NPM"), which will run in a Docker container. We'll setup NPM with SSL Certificates and point it at the frontend of an example application (A Nextjs, Strapi CMS & Postgres based Portfolio website).
 
----
+We'll use 1password as our password manager in our development environment (in my case, a Macbook Pro m2 laptop), to automate the process of feeding environment variables into different processes (for example, server setup with terraform, ssh logging-in, and transferring project directories with rsync)
 
-# Side note about setup prior to using Terraform
+## Setting up Terraform Env Vars
 
-### Setting up Terraform Env Vars
+#### Side note about setup prior to using Terraform
 
 **[Keep in Mind]**
 👉 Linux/MacOS env vars must be prefixed with TF*VAR* for tf to find them.
@@ -122,3 +122,12 @@ export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian proje
 # password: changeme
 
 ```
+
+# Step 3: Setting up SSL Certs & Docker Containers on NPM
+
+Now that NPM is running, and we've logged into it on our browser, at http://ServerIP:81 ,
+we can set it up to serve traffic to our applications' docker containers.
+
+To do this, we'll need to do a little bit of setup with our Domain name's DNS Registrar, and our Hosting provider. I recommend Namecheap & DigitalOcean, respectively.
+
+# Resources & References
