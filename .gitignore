@@ -1,0 +1,11 @@
+# Ignore Terraform state files
+terraform.tfstate
+terraform.tfstate.*
+
+# Ignore Terraform lock file
+.terraform.lock.hcl
+
+# Ignore Terraform working directory
+.terraform/
+
+.DS_Store
