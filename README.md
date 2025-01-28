@@ -139,4 +139,19 @@ To do this, we'll need to do a little bit of setup with our Domain name's DNS Re
 We'll use this project for our initial project:
 https://github.com/pmeaney/portfolio2025-next-strapi-postgres
 
+On the remote server, Docker containers will need to be connected to the `main-network--nginxproxymgr` docker network manually, or via their docker-compose files:
+
+```yml
+services:
+  your-service-name:
+    # Your service configuration here...
+    networks:
+      - main-network--nginxproxymgr # This matches the network name from the first file
+
+networks:
+  main-network--nginxproxymgr: # This must match the name exactly
+    external: true # This tells Docker the network already exists
+    name: main-network--nginxproxmgr # Optional but recommended for clarity
+```
+
 # Resources & References
