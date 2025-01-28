@@ -92,8 +92,8 @@ export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian proje
 ssh "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}"
 
 # (OPTIONAL) Install rsync if it's not already installed on debian server.  I updated the terraform file to install it automatically:
-sudo apt update
-sudo apt install rsync -y
+# sudo apt update
+# sudo apt install rsync -y
 
 # now that we've checked our username & pw work, let's upload the nginx proxy manager directory (from our laptop, of course, not the server)
 # REMEMBER: You'll need to set both env vars, prior to running this command-- such as if you opened a new terminal window.
@@ -108,5 +108,17 @@ rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${L
 cd nginx-proxy-mgr-jan2025 && \
 docker compose -vvv  -f docker-compose.yml up --build --remove-orphans -d && \
 docker compose logs -f nginx-proxy-mgr-012825
+
+# You'll see a bunch of terminal output about NPM booting up, including this line:
+Creating a new user: admin@example.com with password: changeme
+
+# Now, visit NPM's admin page on the browser:
+# output the IP address, assuming you uploaded it to 1password earlier
+# ... or simply copy it from 1pass
+export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_SERVER_IPADDRESS_012325) && echo "${LINUX_SERVER_IPADDRESS_012325}"
+# Now visit NPM's admin page on your browser at http://ServerIP:81    (that is, at port 81.)
+# Log in with these credentials, provided by NPM when it boots for the first time:
+# user: admin@example.com
+# password: changeme
 
 ```
