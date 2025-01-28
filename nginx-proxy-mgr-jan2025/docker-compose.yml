@@ -1,5 +1,5 @@
 services:
-  app:
+  nginx-proxy-mgr-012825:
     image: "jc21/nginx-proxy-manager:latest"
     container_name: nginx-proxy-mgr-012825
     restart: unless-stopped
@@ -12,7 +12,7 @@ services:
       # - '21:21' # FTP
     environment:
       # Postgres parameters:
-      DB_POSTGRES_HOST: "db"
+      DB_POSTGRES_HOST: "postgres-for-nginx-proxy-mgr-012825"
       DB_POSTGRES_PORT: "5432"
       DB_POSTGRES_USER: "npm"
       DB_POSTGRES_PASSWORD: "npmpass"
