@@ -86,6 +86,12 @@ Transfer configuration files to the server:
 rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
 
 # Start NPM containers
+
+# Simple way:
+cd nginx-proxy-mgr-jan2025 && \
+docker compose up
+
+# More verbose:
 cd nginx-proxy-mgr-jan2025 && \
 docker compose -vvv -f docker-compose.yml up --build --remove-orphans -d && \
 docker compose logs -f nginx-proxy-mgr-012825
