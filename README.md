@@ -136,7 +136,7 @@ To configure SSL certificates and serve traffic to your applications:
 
 ### Updating NPM Configuration
 
-To deploy updates to your NPM configuration:
+To deploy updates to your NPM configuration in a quick, automated way:
 
 ```bash
 rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
