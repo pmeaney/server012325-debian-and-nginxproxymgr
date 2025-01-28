@@ -23,9 +23,9 @@ services:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
-      - db
+      - postgres-for-nginx-proxy-mgr-012825
 
-  db:
+  postgres-for-nginx-proxy-mgr-012825:
     image: postgres:latest
     container_name: postgres-for-nginx-proxy-mgr-012825
     environment:

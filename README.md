@@ -4,6 +4,41 @@ https://awstip.com/how-to-create-digitalocean-droplet-using-terraform-a-z-guide-
 
 ---
 
+### Import the nginx-proxy-mgr docker-compose file:
+
+Export the required env vars from 1pass...
+
+- TF_VAR_LINUX_USER_DEVOPS_012325 will be username you set, to log into the server
+- LINUX_SERVER_IPADDRESS_012325 will be the server's IP address. It will be output to the terminal by Terraform (you can always go into the terraform project directory and run `terraform show` to see the IP address in the CLI output again), and you can find it on DigitalOcean in your server hosting dashboard.
+
+```bash
+# export the required env vars
+export TF_VAR_LINUX_USER_DEVOPS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_USER_DEVOPS_012325) && \
+export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_SERVER_IPADDRESS_012325)
+
+# Log into the remote server (to test out our login, and to install rsync for transferring files)
+ssh "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}"
+
+# From in the debian server:
+sudo apt update
+sudo apt install rsync -y
+
+# now that we've checked our username & pw work, let's upload the nginx proxy manager directory (from our laptop, of course, not the server)
+# REMEMBER: You'll need to set both env vars, prior to running this command-- such as if you opened a new terminal window.
+
+export TF_VAR_LINUX_USER_DEVOPS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_USER_DEVOPS_012325) && \
+export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_SERVER_IPADDRESS_012325)
+
+# NOTE: This will overwrite (due to trailing slash at end of source dir) any existing directory of the same name & location on your server.
+rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
+
+# Build & Start Nginx Proxy Manager docker container in background & view its logs
+cd nginx-proxy-mgr-jan2025 && \
+docker compose -vvv  -f docker-compose.yml up --build --remove-orphans -d && \
+docker-compose logs -f nginx-proxy-mgr-012825
+
+```
+
 ### When creating a new ssh key
 
 On MacOS
