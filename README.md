@@ -20,10 +20,11 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
     - [Connecting Additional Services](#connecting-additional-services)
   - [SSL Certificate Setup](#ssl-certificate-setup)
   - [Deployment](#deployment)
+  - [❗❗❗ See `nginx-proxy-mgr-jan2025/README.md` for more info on Nginx Proxy Manager setup](#-see-nginx-proxy-mgr-jan2025readmemd-for-more-info-on-nginx-proxy-manager-setup)
     - [Updating NPM Configuration](#updating-npm-configuration)
     - [Verifying Network Configuration](#verifying-network-configuration)
 - [Resources \& References](#resources--references)
-    - [Source of initial Terraform project code](#source-of-initial-terraform-project-code)
+  - [Source of initial Terraform project code](#source-of-initial-terraform-project-code)
 - [Deployment](#deployment-1)
 
 ## Overview
@@ -169,12 +170,15 @@ To configure SSL certificates and serve traffic to your applications:
 
 ## Deployment
 
+## ❗❗❗ See `nginx-proxy-mgr-jan2025/README.md` for more info on Nginx Proxy Manager setup
+
 ### Updating NPM Configuration
 
-To deploy updates to your NPM configuration in a quick, automated way:
+To transfer updates you make to your NPM Docker Compose file in a quick, automated way, run this rsync command from your developer environment (laptop), and assuming rsync is installed on the remote server, it'll transfer the whole `nginx-proxy-mgr-jan2025` directory to the server. Useful when initially setting things up & testing things out.
 
 ```bash
 rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
+
 ```
 
 ### Verifying Network Configuration
