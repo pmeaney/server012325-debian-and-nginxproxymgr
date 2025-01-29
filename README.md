@@ -87,14 +87,18 @@ rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${L
 
 # Start NPM containers
 
-# Simple way:
+# Simple way to watch it boot & make sure it runs:
 cd nginx-proxy-mgr-jan2025 && \
 docker compose up
 
-# More verbose:
+# Run in background, then check out logs:
 cd nginx-proxy-mgr-jan2025 && \
 docker compose -vvv -f docker-compose.yml up --build --remove-orphans -d && \
 docker compose logs -f nginx-proxy-mgr-012825
+
+# Verify Nginx Proxy Manager is reachable by navigating to this address on your browser:
+# NOTE: Be sure it's HTTP and not HTTPS! We haven't yet setup any SSL certs, so HTTPS won't reach anything
+http://yourServerIP:81
 ```
 
 ## Docker Cross-Service Networking
