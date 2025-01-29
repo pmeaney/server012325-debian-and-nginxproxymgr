@@ -68,9 +68,9 @@ export TF_VAR_LINUX_SERVER_NAME_012325=$(op item get "2025 Jan 012325 Debian pro
 #### Note on Server Sizing
 
 Note: make sure the server is big enough!
-For my Portfolio project, running three containers (NextJS, StrapiJS, Postgres), plus two more for Infrastruture (Nginx Proxy Manager, Postgres)... My dinky server was too small (1 vCPU, 1GB / 25GB Disk, ($6/mo via DigitalOcean)) and I had to upsize it to 1 vCPU, 2GB / 25GB Disk, ($12/mo via DigitalOcean).
+For my Portfolio project, running three containers (NextJS, StrapiJS, Postgres), plus two more for Infrastruture (Nginx Proxy Manager, Postgres)... My server was too small (1 vCPU, 1GB / 25GB Disk, ($6/mo via DigitalOcean)) from what I could see from the charts of cpu usage.
 
-With DigitalOcean, fortunately, there's a feature to re-size the server. Otherwise we would need to re-create a brand new one with terraform, upload our Nginx Proxy Manager docker-compose.yml file to it, built it, etc. But, thanks to DigitalOcean I won't need to do that. However, I did update the server size in the Terraform file config, so in future versions hopefully we'll start with the right size.
+(With DigitalOcean, fortunately, there's a feature to re-size the server. Otherwise we would need to re-create a brand new one with terraform, upload our Nginx Proxy Manager docker-compose.yml file to it, built it, etc. However, I did update the server size in the Terraform file config, so in future versions hopefully we'll start with the right size.)
 
 ```bash
 cd terraform-server--Debian-Jan2025-PortfolioEtc
@@ -198,4 +198,5 @@ export TF_VAR_LINUX_USER_DEVOPS_012325=$(op item get "2025 Jan 012325 Debian pro
 export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_SERVER_IPADDRESS_012325)
 
 rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
+
 ```
