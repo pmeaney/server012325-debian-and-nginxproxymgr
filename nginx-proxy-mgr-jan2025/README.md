@@ -17,15 +17,26 @@ docker compose logs -f nginx-proxy-mgr-012825
     - Username: admin@example.com
     - Password: changeme
 
-These are the settings I tend to use:
+## Creating Proxy Hosts
 
-Default settings you can leave:
+Now we're ready to setup access into the containers, from the public internet.
 
-- Scheme: `http` (it's set as default)
+- Click into the Proxy Host section of Nginx Proxy Manager (running at http://yourServerIP:81 (that's http, not https!))
+- In the upper right corner, click 'Add Proxy Host'.\*\*\*\*
+- We'll only be working with two screens:
+  - New Proxy Host - "Details" Tab
+    - Default settings you can leave:
+    - "Scheme: `http`" (it's set as default)
+    - Set up your `Domain Name`, `Forward Hostname/IP`, and `Forward Port` as specified in the table below, or based on your own settings
 
-When we create these Nginx Proxy Mgr configurations ("Proxy Hosts"), we'll have it automatically request Let's Encrypt SSL certs for each domain or subdomain we create. So, these will all be accessed at https:// instead of http://
+#### Re: Http vs Https -- When we create these Nginx Proxy Mgr configurations ("Proxy Hosts"), we'll have it automatically request Let's Encrypt SSL certs for each domain or subdomain we create. So, these will all be accessed at https:// instead of http://
 
-Now for our domain definitions...
+### Now for our domain definitions...
+
+Note:
+
+- Set `Forward Hostname / IP` to the Docker Engine's IP. You can find it by running this: `ip addr show docker0`
+- `Forward Port` is the application port, running in a docker container, depending on what app you've setup to run and its specified exposed ports.
 
 | Purpose        | Domain Name          | Forward Hostname / IP | Forward Port | Description                                             |
 | -------------- | -------------------- | --------------------- | ------------ | ------------------------------------------------------- |
