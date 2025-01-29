@@ -14,11 +14,29 @@ terraform {
 
 
 locals {
+  // Map of pre-named sizes to look up from
   sizes = {
     nano      = "s-1vcpu-1gb"
+    micro     = "s-2vcpu-2gb"
+    small     = "s-2vcpu-4gb"
+    medium    = "s-4vcpu-8gb"
+    large     = "s-6vcpu-16gb"
+    x-large   = "s-8vcpu-32gb"
+    xx-large  = "s-16vcpu-64gb"
+    xxx-large = "s-24vcpu-128gb"
+    maximum   = "s-32vcpu-192gb"
   }
+  // Map of regions
   regions = {
+    new_york_1    = "nyc1"
+    new_york_3    = "nyc3"
     san_francisco = "sfo3"
+    amsterdam     = "ams3"
+    singapore     = "sgp1"
+    london        = "lon1"
+    frankfurt     = "fra1"
+    toronto       = "tor1"
+    india         = "blr1"
   }
 }
 
@@ -62,7 +80,7 @@ resource "digitalocean_droplet" "droplet" {
   image     = "debian-12-x64"
   name      = "${var.LINUX_SERVER_NAME_012325}"
   region    = local.regions.san_francisco
-  size      = local.sizes.nano
+  size      = local.sizes.micro
   tags      = ["012325", "2025", "portfolio", "terraform", "docker", "debian"]
   user_data = data.template_file.my_example_user_data.rendered
 }
