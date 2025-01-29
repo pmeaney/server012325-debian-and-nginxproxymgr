@@ -80,7 +80,7 @@ resource "digitalocean_droplet" "droplet" {
   image     = "debian-12-x64"
   name      = "${var.LINUX_SERVER_NAME_012325}"
   region    = local.regions.san_francisco
-  size      = local.sizes.micro
+  size      = local.sizes.small
   tags      = ["012325", "2025", "portfolio", "terraform", "docker", "debian"]
   user_data = data.template_file.my_example_user_data.rendered
 }
