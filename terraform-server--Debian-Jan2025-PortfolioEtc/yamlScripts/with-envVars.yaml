@@ -22,23 +22,18 @@ chpasswd:
 
 package_update: true
 package_upgrade: true
-packages:
+Copypackages:
   - zsh
   - git
   - make
+  - rsync
 
 runcmd:
-  # - sudo apt-get update
-  # This uses Docker's automated script to add their repository and install all dependencies: (It builds based on the most recent stable Official Docker-Built packages, so it's up to date)
-  - curl -fsSL get.docker.com | bash
+  # Update package lists before installing anything
+  - sudo apt-get update
+  # Install Docker using the official script
+  - curl -fsSL https://get.docker.com -o get-docker.sh
+  - sh get-docker.sh
   - sudo usermod -aG docker ${LINUX_USER_DEVOPS_012325}
-  - sudo apt-get install docker-
-  - sudo apt install rsync -y
-  # - apt install -y zsh
-  - echo '${LINUX_USER_DEVOPS_012325}:${LINUX_PASSWORD_DEVOPS_012325}' | sudo chpasswd
-  # Install Oh My Zsh for the user '${LINUX_USER_DEVOPS_012325}' (change as needed)
-  - su - ${LINUX_USER_DEVOPS_012325} -c 'sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended'
-  # Change the default shell to Zsh for the user '${LINUX_USER_DEVOPS_012325}'
-  # - chsh -s /bin/zsh ${LINUX_USER_DEVOPS_012325}
-  - chsh -s `which zsh` ${LINUX_USER_DEVOPS_012325}
-  # Install docker compose
+  # Install rsync with error handling
+  - sudo apt-get install -y rsync || echo "Failed to install rsync"
