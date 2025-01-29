@@ -222,4 +222,8 @@ export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian proje
 
 # then ssh in:
 ssh "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}"
+
+# and maybe view the cloud-init logs to see how everything booted & make sure cloud init installed what it's supposed to (see bottom of ./terraform-server--Debian-Jan2025-PortfolioEtc/yamlScripts/with-envVars.yaml file)
+sudo cat /var/log/cloud-init-output.log
+
 ```
