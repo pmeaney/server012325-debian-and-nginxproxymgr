@@ -11,7 +11,7 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
     - [SSH Key Configuration](#ssh-key-configuration)
     - [Setting Up Environment Variables](#setting-up-environment-variables)
     - [Creating the Server](#creating-the-server)
-      - [Note on Server Sizing](#note-on-server-sizing)
+      - [Note on Server Sizing (Pertains to Strapi CMS v5, which is a little bit of a hog!)](#note-on-server-sizing-pertains-to-strapi-cms-v5-which-is-a-little-bit-of-a-hog)
   - [Nginx Proxy Manager Configuration](#nginx-proxy-manager-configuration)
     - [Setting Up NPM](#setting-up-npm)
     - [Deploying NPM Configuration](#deploying-npm-configuration)
@@ -65,12 +65,26 @@ export TF_VAR_LINUX_SERVER_NAME_012325=$(op item get "2025 Jan 012325 Debian pro
 
 ### Creating the Server
 
-#### Note on Server Sizing
+#### Note on Server Sizing (Pertains to Strapi CMS v5, which is a little bit of a hog!)
 
 Note: make sure the server is big enough!
-For my Portfolio project, running three containers (NextJS, StrapiJS, Postgres), plus two more for Infrastruture (Nginx Proxy Manager, Postgres)... My server was too small (1 vCPU, 1GB / 25GB Disk, ($6/mo via DigitalOcean)) from what I could see from the charts of cpu usage.
 
-(With DigitalOcean, fortunately, there's a feature to re-size the server. Otherwise we would need to re-create a brand new one with terraform, upload our Nginx Proxy Manager docker-compose.yml file to it, built it, etc. However, I did update the server size in the Terraform file config, so in future versions hopefully we'll start with the right size.)
+For my Portfolio project, running three containers (NextJS, StrapiJS, Postgres), plus two more for Infrastruture (Nginx Proxy Manager, Postgres)... My initial server was too small (1 vCPU, 1GB / 25GB Disk, ($6/mo via DigitalOcean)) from what I could see from the charts of cpu usage.
+
+With DigitalOcean, fortunately, there's a feature to re-size the server. Otherwise we would need to re-create a brand new one with terraform, upload our Nginx Proxy Manager docker-compose.yml file to it, built it, etc. However, I did update the server size in the Terraform file config, so in future versions hopefully we'll start with the right size.
+
+_update_: I launched a `micro = "s-2vcpu-2gb"` size, but even then, ran into the same memory issue.
+
+Then, I checked the Strapi v5 Docs [General Guidelines](https://docs.strapi.io/dev-docs/deployment#general-guidelines), and found:
+
+> Hardware specifications for your server (CPU, RAM, storage):
+> | Resource | Recommended | Minimum |
+> | -------- | ----------- | ------- |
+> | CPU | 2+ cores | 1 core |
+> | Memory | 4GB+ | 2GB |
+> | Disk | 32GB+ | 8GB |
+
+So, Looks like we'll have to go with the `small = "s-2vcpu-4gb"` server size.
 
 ```bash
 cd terraform-server--Debian-Jan2025-PortfolioEtc
