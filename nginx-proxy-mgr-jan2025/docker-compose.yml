@@ -44,3 +44,4 @@ networks:
     name: main-network--nginxproxymgr
     # With external: true, Docker Compose expects the network to exist already and will fail if it doesn't
     # Without external: true, Docker Compose will automatically create the network when you run docker-compose up
+    # And by default, Docker uses the bridge driver (which is Docker's default network type), so we don't need to specify it.
