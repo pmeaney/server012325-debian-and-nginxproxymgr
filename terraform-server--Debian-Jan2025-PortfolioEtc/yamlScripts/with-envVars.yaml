@@ -21,9 +21,11 @@ chpasswd:
       type: text
 
 package_update: true
+package_upgrade: true
 packages:
   - zsh
   - git
+  - make
 
 runcmd:
   # - sudo apt-get update
