@@ -11,6 +11,7 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
     - [SSH Key Configuration](#ssh-key-configuration)
     - [Setting Up Environment Variables](#setting-up-environment-variables)
     - [Creating the Server](#creating-the-server)
+      - [Note on Server Sizing](#note-on-server-sizing)
   - [Nginx Proxy Manager Configuration](#nginx-proxy-manager-configuration)
     - [Setting Up NPM](#setting-up-npm)
     - [Deploying NPM Configuration](#deploying-npm-configuration)
@@ -64,8 +65,12 @@ export TF_VAR_LINUX_SERVER_NAME_012325=$(op item get "2025 Jan 012325 Debian pro
 
 ### Creating the Server
 
+#### Note on Server Sizing
+
 Note: make sure the server is big enough!
 For my Portfolio project, running three containers (NextJS, StrapiJS, Postgres), plus two more for Infrastruture (Nginx Proxy Manager, Postgres)... My dinky server was too small (1 vCPU, 1GB / 25GB Disk, ($6/mo via DigitalOcean)) and I had to upsize it to 1 vCPU, 2GB / 25GB Disk, ($12/mo via DigitalOcean).
+
+With DigitalOcean, fortunately, there's a feature to re-size the server. Otherwise we would need to re-create a brand new one with terraform, upload our Nginx Proxy Manager docker-compose.yml file to it, built it, etc. But, thanks to DigitalOcean I won't need to do that. However, I did update the server size in the Terraform file config, so in future versions hopefully we'll start with the right size.
 
 ```bash
 cd terraform-server--Debian-Jan2025-PortfolioEtc
