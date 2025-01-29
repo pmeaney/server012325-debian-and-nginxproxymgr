@@ -11,3 +11,8 @@ cd nginx-proxy-mgr-jan2025 && \
 docker compose -vvv -f docker-compose.yml up --build --remove-orphans -d && \
 docker compose logs -f nginx-proxy-mgr-012825
 ```
+
+- Access NPM admin panel at `http://<server-ip>:81`
+  - Default credentials:
+    - Username: admin@example.com
+    - Password: changeme
