@@ -21,6 +21,9 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
   - [Deployment](#deployment)
     - [Updating NPM Configuration](#updating-npm-configuration)
     - [Verifying Network Configuration](#verifying-network-configuration)
+- [Resources \& References](#resources--references)
+  - [Source of initial Terraform project code](#source-of-initial-terraform-project-code)
+- [Deployment](#deployment-1)
 
 ## Overview
 
@@ -60,6 +63,9 @@ export TF_VAR_LINUX_SERVER_NAME_012325=$(op item get "2025 Jan 012325 Debian pro
 ```
 
 ### Creating the Server
+
+Note: make sure the server is big enough!
+For my Portfolio project, running three containers (NextJS, StrapiJS, Postgres), plus two more for Infrastruture (Nginx Proxy Manager, Postgres)... My dinky server was too small (1 vCPU, 1GB / 25GB Disk, ($6/mo via DigitalOcean)) and I had to upsize it to 1 vCPU, 2GB / 25GB Disk, ($12/mo via DigitalOcean).
 
 ```bash
 cd terraform-server--Debian-Jan2025-PortfolioEtc
@@ -168,3 +174,17 @@ docker network inspect main-network--nginxproxymgr -f '{{range .Containers}}{{.N
 ```
 
 This comprehensive guide provides the foundation for setting up a secure, well-organized server infrastructure using modern DevOps practices and tools.
+
+# Resources & References
+
+### Source of initial Terraform project code
+
+- oleksii*y. (2022, June 5). \_How to create DigitalOcean droplet using Terraform. A-Z guide*. AWSTip.com. Retrieved from [https://awstip.com/how-to-create-digitalocean-droplet-using-terraform-a-z-guide-df91716f6021](https://awstip.com/how-to-create-digitalocean-droplet-using-terraform-a-z-guide-df91716f6021)
+  - Archived Article: https://archive.is/I2Mh0
+  - Original's Raw Source Code as an archived Github Gist: https://gist.githubusercontent.com/alexsplash/5f8f34f4020092b634dfd29316683718/raw/f6a4331346efe3bc333fb3cf1e91203faa1e7bf1/digitalocean.tf
+-
+
+# Deployment
+
+Deploy the newest Nginx Proxy Manager config update via rsync instead of git project cloning:
+rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025

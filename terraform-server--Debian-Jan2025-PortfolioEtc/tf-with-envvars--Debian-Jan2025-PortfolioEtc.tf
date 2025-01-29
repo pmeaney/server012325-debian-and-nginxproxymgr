@@ -11,6 +11,8 @@ terraform {
   }
 }
 
+
+
 locals {
   sizes = {
     nano      = "s-1vcpu-1gb"
