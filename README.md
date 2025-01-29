@@ -116,7 +116,7 @@ rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${L
 cd nginx-proxy-mgr-jan2025 && \
 docker compose up
 
-# Run in background, then check out logs:
+# This command is to Run in background, then check out logs.  It's a nice way to view the running container, while leaving it running after you exit the logs view.:
 cd nginx-proxy-mgr-jan2025 && \
 docker compose -vvv -f docker-compose.yml up --build --remove-orphans -d && \
 docker compose logs -f nginx-proxy-mgr-012825
