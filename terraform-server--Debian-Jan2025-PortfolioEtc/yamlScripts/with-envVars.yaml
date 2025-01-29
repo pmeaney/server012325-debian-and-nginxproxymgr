@@ -22,7 +22,7 @@ chpasswd:
 
 package_update: true
 package_upgrade: true
-Copypackages:
+packages:
   - zsh
   - git
   - make
