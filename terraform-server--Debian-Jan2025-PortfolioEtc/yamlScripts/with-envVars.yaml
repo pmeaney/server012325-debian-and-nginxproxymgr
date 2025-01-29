@@ -33,7 +33,6 @@ runcmd:
   - curl -fsSL get.docker.com | bash
   - sudo usermod -aG docker ${LINUX_USER_DEVOPS_012325}
   - sudo apt-get install docker-
-  - sudo apt update
   - sudo apt install rsync -y
   # - apt install -y zsh
   - echo '${LINUX_USER_DEVOPS_012325}:${LINUX_PASSWORD_DEVOPS_012325}' | sudo chpasswd

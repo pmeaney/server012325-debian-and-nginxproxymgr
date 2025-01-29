@@ -23,7 +23,7 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
     - [Updating NPM Configuration](#updating-npm-configuration)
     - [Verifying Network Configuration](#verifying-network-configuration)
 - [Resources \& References](#resources--references)
-  - [Source of initial Terraform project code](#source-of-initial-terraform-project-code)
+    - [Source of initial Terraform project code](#source-of-initial-terraform-project-code)
 - [Deployment](#deployment-1)
 
 ## Overview
@@ -208,9 +208,18 @@ This comprehensive guide provides the foundation for setting up a secure, well-o
 Deploy the newest Nginx Proxy Manager config update via rsync instead of git project cloning:
 
 ```bash
-export TF_VAR_LINUX_USER_DEVOPS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_USER_DEVOPS_012325) && \
-export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_SERVER_IPADDRESS_012325)
-
 rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
 
+# if rsync isn't installed on remote server (and your laptop), be sure to install it first.  For debian, for example:
+sudo apt install rsync -y
+
+```
+
+```bash
+# for ssh login, I like to pull login & ip from 1pass:export TF_VAR_LINUX_USER_DEVOPS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_USER_DEVOPS_012325) && \
+export TF_VAR_LINUX_USER_DEVOPS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_USER_DEVOPS_012325) && \
+export LINUX_SERVER_IPADDRESS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_SERVER_IPADDRESS_012325)=LINUX_SERVER_IPADDRESS_012325)
+
+# then ssh in:
+ssh "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}"
 ```
