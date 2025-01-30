@@ -35,8 +35,10 @@ Now we're ready to setup access into the containers, from the public internet.
 
 Note:
 
-- Set `Forward Hostname / IP` to the Docker Engine's IP. You can find it by running this: `ip addr show docker0`
+- Set `Forward Hostname / IP` to the Docker Engine's IP. You can find it by running this: `ip addr show docker0` (usually its 172.17.0.1)
 - `Forward Port` is the application port, running in a docker container, depending on what app you've setup to run and its specified exposed ports.
+
+- Somtimes NPM can be finnicky, especially after it starts up, or after you try to re-create certs with the same domain, but on a new server. Try again if there's an internal error with npm during its automatic lets encrypt cert attempts.
 
 | Purpose        | Domain Name          | Forward Hostname / IP | Forward Port | Description                                             |
 | -------------- | -------------------- | --------------------- | ------------ | ------------------------------------------------------- |
