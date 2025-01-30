@@ -9,9 +9,10 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
   - [Overview](#overview)
   - [Initial Server Setup with Terraform](#initial-server-setup-with-terraform)
     - [SSH Key Configuration](#ssh-key-configuration)
-    - [Setting Up Environment Variables](#setting-up-environment-variables)
-    - [Creating the Server](#creating-the-server)
-      - [Note on Server Sizing (Pertains to Strapi CMS v5, which is a little bit of a hog!)](#note-on-server-sizing-pertains-to-strapi-cms-v5-which-is-a-little-bit-of-a-hog)
+- [Configure SSH key in ~/.ssh/config](#configure-ssh-key-in-sshconfig)
+- [Add key to macOS keychain](#add-key-to-macos-keychain)
+  - [Creating the Server](#creating-the-server)
+    - [Note on Server Sizing (Pertains to Strapi CMS v5, which is a little bit of a hog!)](#note-on-server-sizing-pertains-to-strapi-cms-v5-which-is-a-little-bit-of-a-hog)
   - [Nginx Proxy Manager Configuration](#nginx-proxy-manager-configuration)
     - [Setting Up NPM](#setting-up-npm)
     - [Deploying NPM Configuration](#deploying-npm-configuration)
@@ -39,18 +40,38 @@ Before beginning the Terraform setup, ensure your SSH keys are properly configur
 
 ```bash
 # generate a new key if you need to
-# Since we'll use this for our CICD process, DO NOT INCLUDE A PASSCODE when generating the ssh key
+# !!! Since we'll use this for our CICD process, DO NOT INCLUDE A PASSCODE when generating the ssh key
 ssh-keygen -t ed25519 -C "you@yourEmail.com"
 
+# Same as above, but specifies the file as well-- so we dont have to be prompted for it.
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_nopass_LINUX_SSH_KEY_012325 -C "patrick.wm.meaney@gmail.com"
+```
+
+If you get this error, since no password on the key:
+
+```bash
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ WARNING: UNPROTECTED PRIVATE KEY FILE! @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0644 for '/Users/patrickmeaney/.ssh/id_ed25519_nopass_LINUX_SSH_KEY_012325.pub' are too open.
+
+```
+
+run this, to make it owned by your computer's user account:
+`chmod 600 ~/.ssh/id_ed25519_nopass_LINUX_SSH_KEY_012325.pub`
+
 # Configure SSH key in ~/.ssh/config
-Host *
-  AddKeysToAgent yes
-  UseKeychain yes
-  IdentityFile ~/.ssh/yourKeyFilename
+
+Host \*
+AddKeysToAgent yes
+UseKeychain yes
+IdentityFile ~/.ssh/yourKeyFilename
 
 # Add key to macOS keychain
+
 ssh-add --apple-use-keychain ~/.ssh/nameOrPathTosshKey
-```
+
+````
 
 ### Setting Up Environment Variables
 
@@ -63,7 +84,7 @@ export TF_VAR_LINUX_PASSWORD_DEVOPS_012325=$(op item get "2025 Jan 012325 Debian
 export TF_VAR_LINUX_USER_DEVOPS_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_USER_DEVOPS_012325) &&
 export TF_VAR_LINUX_SSH_KEY_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=id_ed25519_nopass_LINUX_SSH_KEY_012325) &&
 export TF_VAR_LINUX_SERVER_NAME_012325=$(op item get "2025 Jan 012325 Debian project" --fields label=LINUX_SERVER_NAME_012325)
-```
+````
 
 ### Creating the Server
 
@@ -111,6 +132,10 @@ Transfer configuration files to the server:
 
 ```bash
 rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
+
+# OR if you need to specify your identity file:
+rsync -avvz -e "ssh -i ~/.ssh/id_ed25519_nopass_LINUX_SSH_KEY_012325" ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
+
 
 # Start NPM containers
 
