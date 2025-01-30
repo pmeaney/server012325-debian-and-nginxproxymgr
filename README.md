@@ -7,6 +7,11 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
 - [ ] Mention in Readme that if you want to use CICD on your server, you'll need a 2nd, no-pass ssh key.
   - General server bootup & interaction key, as a developer. Place the public key on: DigitalOcean, Github (so you can clone stuff on your server-- add to user account keys), Terraform (i.e. this last one is via one pass env var)
   - A CICD key for your CICD Runner to interact with the server. Place the public key on: DigitalOcean, Github (add to user account keys). Place private key into a repo secret, on the project that will CICD deploy (e.g. portfolio site)
+- [ ] ## Automate the following things on Nginx Proxy Manager via CLI commands:
+  - Set up proxy hosts for a given set of domains/subdomains
+    - via postgres config
+    - via NPM's API (as an alternative)
+  - Enable Let's Encrypt for a given set of domains/subdomains
 
 ## Table of Contents
 
@@ -18,8 +23,8 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
     - [SSH Key Configuration](#ssh-key-configuration)
 - [Configure SSH key in ~/.ssh/config](#configure-ssh-key-in-sshconfig)
 - [Add key to macOS keychain](#add-key-to-macos-keychain)
-    - [Creating the Server](#creating-the-server)
-      - [Note on Server Sizing (Pertains to Strapi CMS v5, which is a little bit of a hog!)](#note-on-server-sizing-pertains-to-strapi-cms-v5-which-is-a-little-bit-of-a-hog)
+  - [Creating the Server](#creating-the-server)
+    - [Note on Server Sizing (Pertains to Strapi CMS v5, which is a little bit of a hog!)](#note-on-server-sizing-pertains-to-strapi-cms-v5-which-is-a-little-bit-of-a-hog)
   - [Nginx Proxy Manager Configuration](#nginx-proxy-manager-configuration)
     - [Setting Up NPM](#setting-up-npm)
     - [Deploying NPM Configuration](#deploying-npm-configuration)
@@ -32,7 +37,7 @@ A comprehensive guide for setting up a Linux server with Terraform, configuring 
     - [Updating NPM Configuration](#updating-npm-configuration)
     - [Verifying Network Configuration](#verifying-network-configuration)
 - [Resources \& References](#resources--references)
-    - [Source of initial Terraform project code](#source-of-initial-terraform-project-code)
+  - [Source of initial Terraform project code](#source-of-initial-terraform-project-code)
 - [Deployment](#deployment-1)
 
 ## Overview
