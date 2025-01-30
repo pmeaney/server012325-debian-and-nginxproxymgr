@@ -39,6 +39,7 @@ Before beginning the Terraform setup, ensure your SSH keys are properly configur
 
 ```bash
 # generate a new key if you need to
+# Since we'll use this for our CICD process, DO NOT INCLUDE A PASSCODE when generating the ssh key
 ssh-keygen -t ed25519 -C "you@yourEmail.com"
 
 # Configure SSH key in ~/.ssh/config
