@@ -250,6 +250,10 @@ This comprehensive guide provides the foundation for setting up a secure, well-o
 Deploy the newest Nginx Proxy Manager config update via rsync instead of git project cloning:
 
 ```bash
+
+# I think you might still need to install rsync manually, the cloud init script is failing to do so. (terraform-server--Debian-Jan2025-PortfolioEtc/yamlScripts/with-envVars.yaml)
+sudo apt-get install -y rsync
+
 rsync -avvz ./nginx-proxy-mgr-jan2025/ "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}":~/nginx-proxy-mgr-jan2025
 
 # if rsync isn't installed on remote server (and your laptop), be sure to install it first.  For debian, for example:
@@ -267,5 +271,4 @@ ssh "${TF_VAR_LINUX_USER_DEVOPS_012325}"@"${LINUX_SERVER_IPADDRESS_012325}"
 
 # and maybe view the cloud-init logs to see how everything booted & make sure cloud init installed what it's supposed to (see bottom of ./terraform-server--Debian-Jan2025-PortfolioEtc/yamlScripts/with-envVars.yaml file)
 sudo cat /var/log/cloud-init-output.log
-
 ```
